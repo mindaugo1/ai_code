@@ -3,7 +3,7 @@ import tensorflow as tf
 # Create dataset from sequence categorical data with one hot encoding
 
 
-def make_dataset_from_cat_sequence(data, vocabulary_size, window_length, batch_size):
+def make_one_hot_dataset_from_timeseries(data, vocabulary_size, window_length, batch_size):
     dataset = tf.data.Dataset.from_tensor_slices(data)
     dataset = dataset.repeat().window(window_length, shift=1, drop_remainder=True)
     dataset = dataset.flat_map(lambda window: window.batch(window_length))
