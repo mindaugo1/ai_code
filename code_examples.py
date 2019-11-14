@@ -1,8 +1,10 @@
 import tensorflow as tf
 
+# Create dataset from sequence categorical data with one hot encoding
+
 
 def make_dataset(data, vocabulary_size, window_length, batch_size):
-    dataset = tf.data.Dataset.from_tensor_slices | (data)
+    dataset = tf.data.Dataset.from_tensor_slices(data)
     dataset = dataset.repeat().window(window_length, shift=1, drop_remainder=True)
     dataset = dataset.flat_map(lambda window: window.batch(window_length))
     dataset = dataset.shuffle(len(data)//100).batch(batch_size)
