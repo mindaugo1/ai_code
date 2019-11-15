@@ -4,7 +4,7 @@ class DataBundle:
         self.y = y
 
     @classmethod
-    def from_dataframe(cls, dataframe, x_col, y_col):
+    def create_data_bundle_obj_from_dataframe(cls, dataframe, x_col, y_col):
         return cls(dataframe[x_col].values, dataframe[y_col].values)
 
     @classmethod
