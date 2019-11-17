@@ -1,3 +1,6 @@
+import attr
+
+
 class DataBundle:
     def __init__(self, x: np.ndarray, y: np.ndarray):
         self.x = x
@@ -29,3 +32,10 @@ class DataBundle:
             current_index += dx
 
         return tuple(result)
+
+
+@attr.s(auto_attribs=True)
+class DataContainer:
+    train: DataBundle
+    validation: DataBundle
+    test: DataBundle
