@@ -11,7 +11,7 @@ class DataBundle:
         return cls(dataframe[x_col].values, dataframe[y_col].values)
 
     @classmethod
-    def split(cls, data_bundle, fracs, random=True):
+    def split_data_bundle_obj(cls, data_bundle, fracs, random=True):
         x = data_bundle.x
         y = data_bundle.y
 
@@ -22,16 +22,21 @@ class DataBundle:
 
         result = []
         current_index = 0
+
         for frac in fracs:
             dx = math.ceil(len(y) * frac)
-            split_data_bundle = (
-                x[current_index: current_index + dx],
-                y[current_index: current_index + dx],
+            temp_data_bundle_obj_container = cls(
+                x=x[current_index: current_index + dx],
+                y=y[current_index: current_index + dx],
             )
-            result.append(split_data_bundle)
+
+            result.append(temp_data_bundle_obj_container)
             current_index += dx
 
         return tuple(result)
+
+    def make_tf_dataset_from_data_bundle(data_bundle):
+        return tf.data.Dataset.from_tensor_slices((data_bundle.x, data_bundle.y))
 
 
 @attr.s(auto_attribs=True)
@@ -39,12 +44,3 @@ class DataContainer:
     train: DataBundle
     validation: DataBundle
     test: DataBundle
-
-
-def make_dataset(data_bundle):
-    return tf.data.Dataset.from_tensor_slices((data_bundle.x, data_bundle.y))
-
-
-data_container.train.dataset = make_dataset(data_container.train)
-data_container.validation.dataset = make_dataset(data_container.validation)
-data_container.test.dataset = make_dataset(data_container.test)
