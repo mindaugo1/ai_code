@@ -39,3 +39,12 @@ class DataContainer:
     train: DataBundle
     validation: DataBundle
     test: DataBundle
+
+
+def make_dataset(data_bundle):
+    return tf.data.Dataset.from_tensor_slices((data_bundle.x, data_bundle.y))
+
+
+data_container.train.dataset = make_dataset(data_container.train)
+data_container.validation.dataset = make_dataset(data_container.validation)
+data_container.test.dataset = make_dataset(data_container.test)
