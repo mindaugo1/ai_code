@@ -25,18 +25,18 @@ class DataBundle:
 
         for frac in fracs:
             dx = math.ceil(len(y) * frac)
-            temp_data_bundle_obj_container = cls(
+            temp_data_bundle_objs_container = cls(
                 x=x[current_index: current_index + dx],
                 y=y[current_index: current_index + dx],
             )
 
-            result.append(temp_data_bundle_obj_container)
+            result.append(temp_data_bundle_objs_container)
             current_index += dx
 
         return tuple(result)
 
-    def make_tf_dataset_from_data_bundle(data_bundle):
-        return tf.data.Dataset.from_tensor_slices((data_bundle.x, data_bundle.y))
+    def create_tf_dataset_from_data_bundle_obj(data_bundle):
+        return tf.data.Dataframe.from_tensor_slices(data_bundle.x, data_bundle.y)
 
 
 @attr.s(auto_attribs=True)
