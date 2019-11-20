@@ -27,6 +27,9 @@ class TransformingDataframes:
         counts = dataframe[col_name].value_counts(normalize=True)
         return dataframe.loc[dataframe[col_name].isin(counts[counts > threshold].index), :].reset_index(drop=True)
 
+    def make_category_map(labels):
+        return {x: i for i, x in enumerate(set(labels))}
+
     class_weights = dict(
         enumerate(
             sk.utils.class_weight.compute_class_weight(
