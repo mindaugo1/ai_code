@@ -10,7 +10,7 @@ class DataFrameUtils:
             temp_dataframe[new_feature_col_name] = dataframe[column].values
             temp_dataframe[new_content_col_name] = value
             result.append(temp_dataframe)
-            pd_result = pd.concat(result)
+        pd_result = pd.concat(result)
         return pd_result.loc[pd_result[new_feature_col_name].notnull()].reset_index(drop=True)
 
     def count_not_null_values(dataframe, columns):
