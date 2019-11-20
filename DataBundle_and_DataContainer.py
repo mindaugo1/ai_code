@@ -1,4 +1,9 @@
 import attr
+import tensorflow as tf
+import numpy as np
+import pandas as pd
+import math
+tf.enable_eager_execution()
 
 
 class DataBundle:
@@ -36,7 +41,9 @@ class DataBundle:
         return tuple(result)
 
     def create_tf_dataset_from_data_bundle_obj(data_bundle):
-        return tf.data.Dataframe.from_tensor_slices(data_bundle.x, data_bundle.y)
+        x_dataset = tf.data.Dataset.from_tensor_slices(data_bundle.x)
+        y_dataset = tf.data.Dataset.from_tensor_slices(data_bundle.y)
+        return tf.data.Dataset.zip((x_dataset, y_dataset))
 
 
 @attr.s(auto_attribs=True)
