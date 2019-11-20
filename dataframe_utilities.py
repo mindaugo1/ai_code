@@ -2,16 +2,16 @@ class TransformingDataframes:
 
     import numpy as np
 
-    def extract_columns_values_to_one_column(dataframe, columns_keys, content_col, features_col):
+    def extract_columns_values_to_one_column(dataframe, columns_keys, new_content_col_name, new_feature_col_name):
         result = []
         for column in columns_keys.keys():
             value = columns_keys.get(column)
-            temp_dataframe = pd.DataFrame(columns=[features_col, content_col])
-            temp_dataframe[features_col] = dataframe[column].values
-            temp_dataframe[content_col] = value
+            temp_dataframe = pd.DataFrame(columns=[new_feature_col_name, new_content_col_name])
+            temp_dataframe[new_feature_col_name] = dataframe[column].values
+            temp_dataframe[new_content_col_name] = value
             result.append(temp_dataframe)
-        pd_result = pd.concat(result)
-        return pd_result.loc[pd_result[features_col].notnull()].reset_index(drop=True)
+            pd_result = pd.concat(result)
+        return pd_result.loc[pd_result[new_feature_col_name].notnull()].reset_index(drop=True)
 
     def count_not_null_values(dataframe, columns):
         not_null_values = 0
