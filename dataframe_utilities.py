@@ -1,6 +1,7 @@
 class DataFrameUtils:
 
     import numpy as np
+    import pandas as pd
 
     def extract_columns_values_to_one_column(dataframe, columns_keys, new_content_col_name, new_feature_col_name):
         result = []
@@ -30,10 +31,11 @@ class DataFrameUtils:
     def make_category_map(labels):
         return {x: i for i, x in enumerate(set(labels))}
 
-    class_weights = dict(
-        enumerate(
-            sk.utils.class_weight.compute_class_weight(
-                "balanced", np.unique(data_container.train.y), data_container.train.y
+    def calculate_class_weights(data_container):
+        return dict(
+            enumerate(
+                sk.utils.class_weight.compute_class_weight(
+                    "balanced", np.unique(data_container.train.y), data_container.train.y
+                )
             )
         )
-    )
