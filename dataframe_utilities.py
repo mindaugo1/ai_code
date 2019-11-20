@@ -1,4 +1,4 @@
-class TransformingDataframes:
+class DataFrameUtils:
 
     import numpy as np
 
