@@ -2,15 +2,13 @@
 import numpy as np
 
 
-def drop_values(df, col_name, values):
-    return df.loc[~df[col_name].isin(values), :].reset_index(drop=True)
+def drop_values_from_dataframe(dataframe, col_name, values_to_keep):
+    return dataframe.loc[~dataframe[col_name].isin(values_to_keep), :].reset_index(drop=True)
 
 
-def drop_rare_values(df, col_name, threshold):
-    counts = df[col_name].value_counts(normalize=True)
-    return df.loc[df[col_name].isin(counts[counts > threshold].index), :].reset_index(
-        drop=True
-    )
+def drop_rare_values_from_dataframe(dataframe, col_name, threshold):
+    counts = dataframe[col_name].value_counts(normalize=True)
+    return dataframe.loc[dataframe[col_name].isin(counts[counts > threshold].index), :].reset_index(drop=True)
 
 
 class_weights = dict(
