@@ -3,6 +3,7 @@ class DataFrameUtils:
     import numpy as np
     import pandas as pd
 
+    @staticmethod
     def extract_columns_values_to_one_column(dataframe, columns_keys, new_content_col_name, new_feature_col_name):
         result = []
         for column in columns_keys.keys():
@@ -14,6 +15,7 @@ class DataFrameUtils:
         pd_result = pd.concat(result)
         return pd_result.loc[pd_result[new_feature_col_name].notnull()].reset_index(drop=True)
 
+    @staticmethod
     def count_not_null_values(dataframe, columns):
         not_null_values = 0
         for col in columns:
@@ -21,16 +23,20 @@ class DataFrameUtils:
             not_null_values += not_null
         print(not_null_values)
 
+    @staticmethod
     def drop_values_from_dataframe(dataframe, col_name, values_to_drop):
         return dataframe.loc[~dataframe[col_name].isin(values_to_drop), :].reset_index(drop=True)
 
+    @staticmethod
     def drop_rare_values_from_dataframe(dataframe, col_name, threshold):
         counts = dataframe[col_name].value_counts(normalize=True)
         return dataframe.loc[dataframe[col_name].isin(counts[counts > threshold].index), :].reset_index(drop=True)
 
+    @staticmethod
     def make_category_map(labels):
         return {x: i for i, x in enumerate(set(labels))}
 
+    @staticmethod
     def calculate_class_weights(data_container):
         return dict(
             enumerate(
