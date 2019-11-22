@@ -40,6 +40,7 @@ class DataBundle:
 
         return tuple(result)
 
+    @staticmethod
     def create_tf_dataset_from_data_bundle_obj(data_bundle):
         x_dataset = tf.data.Dataset.from_tensor_slices(data_bundle.x)
         y_dataset = tf.data.Dataset.from_tensor_slices(data_bundle.y)
