@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 
-class ToTfUtilities:
+class ToTfUtils:
 
     @staticmethod
     def create_tf_dataset_from_data_bundle_obj(data_bundle):
