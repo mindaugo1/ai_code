@@ -12,6 +12,20 @@ class DataBundle:
         self.y = y
 
     @classmethod
+    def create_data_bundle_from_unbalanced_data_bundle(cls, data_bundle: "DataBundle") -> "DataBundle":
+        values, counts = np.unique(data_bundle.y, return_counts=True)
+        max_count = counts.max()
+        x = []
+        y = []
+        for value, count in zip(values, counts):
+            indices = np.argwhere(data_bundle.y == value)
+            for _ in range(max_count // count):
+                x.append(data_bundle.x[indices].flatten())
+                y.append(data_bundle.y[indices].flatten())
+
+        return cls(np.concatenate(x), np.concatenate(y))
+
+    @classmethod
     def create_data_bundle_obj_from_dataframe(cls, dataframe, x_col, y_col):
         return cls(dataframe[x_col].values, dataframe[y_col].values)
 
