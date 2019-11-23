@@ -12,7 +12,7 @@ class DataBundle:
         self.y = y
 
     @classmethod
-    def create_data_bundle_from_unbalanced_data_bundle(cls, data_bundle: "DataBundle") -> "DataBundle":
+    def create_data_bundle_from_unbalanced_data_bundle(cls, data_bundle):
         values, counts = np.unique(data_bundle.y, return_counts=True)
         max_count = counts.max()
         x = []
