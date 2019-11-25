@@ -4,21 +4,16 @@ class DataFrameUtils:
     import pandas as pd
 
     @staticmethod
-    def extract_columns_values_to_one_column(dataframe, columns_keys, new_content_col_name, new_feature_col_name):
-
+    def create_x_y_dataframe_from_columns_value(dataframe, columns, labels, new_x_col_name, new_y_col_name):
         result = []
-
-        for column in columns_keys.keys():
-            value = columns_keys.get(column)
-
-            temp_dataframe = pd.DataFrame(columns=[new_feature_col_name, new_content_col_name])
-            temp_dataframe[new_feature_col_name] = dataframe[column].values
-            temp_dataframe[new_content_col_name] = value
-
+        for column, label in zip(columns, labels):
+            temp_dataframe = pd.DataFrame(columns=[new_x_col_name, new_y_col_name])
+            temp_dataframe[new_y_col_name] = dataframe[column].values
+            temp_dataframe[new_x_col_name] = label
             result.append(temp_dataframe)
 
         pd_result = pd.concat(result)
-        return pd_result.loc[pd_result[new_feature_col_name].notnull()].reset_index(drop=True)
+        return pd_result.loc[pd_result[new_y_col_name].notnull()].reset_index(drop=True)
 
     @staticmethod
     def count_not_null_values(dataframe, columns):
