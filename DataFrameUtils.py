@@ -4,7 +4,7 @@ class DataFrameUtils:
     import pandas as pd
 
     @staticmethod
-    def create_x_y_dataframe_from_columns_value(dataframe, columns, labels, new_x_col_name, new_y_col_name):
+    def create_new_x_y_dataframe_from_dataframe(dataframe, columns, labels, new_x_col_name, new_y_col_name):
         result = []
         for column, label in zip(columns, labels):
             temp_dataframe = pd.DataFrame(columns=[new_x_col_name, new_y_col_name])
