@@ -12,16 +12,26 @@ class DataBundle:
         self.y = y
 
     @classmethod
-    def create_data_bundle_from_unbalanced_data_bundle(cls, data_bundle):
-        values, counts = np.unique(data_bundle.y, return_counts=True)
-        max_count = counts.max()
+    @classmethod
+    def create_data_bundle_from_unbalanced_data_bundle(
+        cls,
+        data_bundle,
+        target_class_size: int,
+        value_counts: Dict[int, int],
+    ):
         x = []
         y = []
-        for value, count in zip(values, counts):
-            indices = np.argwhere(data_bundle.y == value)
-            for _ in range(max_count // count):
-                x.append(data_bundle.x[indices].flatten())
-                y.append(data_bundle.y[indices].flatten())
+        for label, current_size in value_counts.items():
+            current_indices = np.argwhere(data_bundle.y == label).flatten()
+            next_indices = []
+            for _ in range(target_class_size // current_size):
+                next_indices.append(np.random.permutation(current_indices))
+            next_indices.append(
+                np.random.choice(current_indices, target_class_size % current_size)
+            )
+            next_indices = np.concatenate(next_indices)
+            x.append(data_bundle.x[next_indices])
+            y.append(data_bundle.y[next_indices])
 
         return cls(np.concatenate(x), np.concatenate(y))
 
