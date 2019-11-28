@@ -12,28 +12,25 @@ class DataBundle:
         self.y = y
 
     @classmethod
-    @classmethod
     def create_data_bundle_from_unbalanced_data_bundle(
         cls,
         data_bundle,
-        target_class_size: int,
-        value_counts: Dict[int, int],
+        target_class_size,
+        value_counts,
     ):
         x = []
         y = []
         for label, current_size in value_counts.items():
-            current_indices = np.argwhere(data_bundle.y == label).flatten()
-            next_indices = []
-            for _ in range(target_class_size // current_size):
-                next_indices.append(np.random.permutation(current_indices))
-            next_indices.append(
-                np.random.choice(current_indices, target_class_size % current_size)
-            )
-            next_indices = np.concatenate(next_indices)
-            x.append(data_bundle.x[next_indices])
-            y.append(data_bundle.y[next_indices])
+        current_indices = np.argwhere(data_bundle.y == value).flatten()
+        indices_to_append = []
+        for _ in range(target_class_size // current_size):
+            indices_to_append.append(np.random.permutation(current_indices))
+        indices_to_append.append(np.random.choice(indices_to_append, target_class_size % current_size))
+        indices_to_append = np.concatenate(indices_to_append)
+        x.append(data_bundle.x[indices_to_append])
+        y.append(data_bundle.y[indices_to_append])
 
-        return cls(np.concatenate(x), np.concatenate(y))
+    return cls(np.concatinate(x), np.concatinate(y))
 
     @classmethod
     def create_data_bundle_obj_from_dataframe(cls, dataframe, x_col, y_col):
