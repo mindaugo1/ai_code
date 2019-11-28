@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 import math
-tf.enable_eager_execution()
+# tf.enable_eager_execution()
 
 
 class DataBundle:
@@ -21,8 +21,8 @@ class DataBundle:
         x = []
         y = []
         for label, current_size in value_counts.items():
-        current_indices = np.argwhere(data_bundle.y == value).flatten()
-        indices_to_append = []
+            current_indices = np.argwhere(data_bundle.y == label).flatten()
+            indices_to_append = []
         for _ in range(target_class_size // current_size):
             indices_to_append.append(np.random.permutation(current_indices))
         indices_to_append.append(np.random.choice(indices_to_append, target_class_size % current_size))
@@ -30,7 +30,7 @@ class DataBundle:
         x.append(data_bundle.x[indices_to_append])
         y.append(data_bundle.y[indices_to_append])
 
-    return cls(np.concatinate(x), np.concatinate(y))
+        return cls(np.concatenate(x), np.concatenate(y))
 
     @classmethod
     def create_data_bundle_obj_from_dataframe(cls, dataframe, x_col, y_col):
