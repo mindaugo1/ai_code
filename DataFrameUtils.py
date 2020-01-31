@@ -4,6 +4,11 @@ class DataFrameUtils:
     import pandas as pd
 
     @staticmethod
+    def show_long_names(dataframe, col_name):
+        dataframe = dataframe[dataframe[col_name].map(len) > 15]
+        return dataframe
+
+    @staticmethod
     def create_new_x_y_dataframe_from_dataframe(dataframe, columns, labels, new_x_col_name, new_y_col_name):
         result = []
         for column, label in zip(columns, labels):
